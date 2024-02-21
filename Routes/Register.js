@@ -2,6 +2,7 @@ const router=require('express')
 const email=require('../CustomFunction/email')
 const passwordFunction = require('../CustomFunction/encrypt')
 const tokenFunction=require('../CustomFunction/tokens')
+const con = require('../Connections/mysql')
 const register=router.Router()
 register.post('/',async (req,res,next)=>{
     console.log(req.body)
@@ -14,7 +15,14 @@ register.post('/',async (req,res,next)=>{
 register.get('/',(req,res,next)=>{
     console.log(req.query)
     const destails=tokenFunction.verifyToken(req.query.token)
-    console.log(destails)
-    res.json(destails)
+    con.query('INSERT INTO userData(email,userName,password) VALUES(?,?,?);',[destails.emailId,destails.userName,destails.hashPass],(err,data)=>{
+        if(err){
+            res.send([])
+        }
+        else{
+            res.json(destails)
+        
+        }
+    })
 })
 module.exports =register
