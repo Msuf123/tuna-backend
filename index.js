@@ -64,6 +64,14 @@ app.use('/fishData',getFish)
 app.post('/login',passport.authenticate('local'),(req,res,next)=>{
   res.send({auth:true})
 })
+app.get('/logout',(req,res,next)=>{
+  req.logout((err)=>{
+    if(err){
+      console.log(err)
+    }
+    res.send({success:true})
+  })
+})
 app.get('/img/:name',(req,res,next)=>{
     res.sendFile(`/home/king/Desktop/tuna/Images/${req.params.name}`)
 })
