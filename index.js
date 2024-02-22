@@ -8,6 +8,7 @@ const getFish = require('./Routes/getFish')
 const passport = require('passport')
 const session = require('express-session')
 const { genSaltSync } = require('bcrypt')
+const addCart = require('./Routes/addCart')
 const LocalStrategy = require('passport-local').Strategy
 const mysqlStore = require('express-mysql-session')(session);
 const  sessionStore = new mysqlStore({
@@ -49,20 +50,20 @@ passport.use(new LocalStrategy({usernameField:'userName'},function(userName,pass
 }))
 passport.serializeUser((userObj,done)=>{
   console.log(userObj[0])
-  done(null,userObj[0].email)
+  done(null,userObj[0].userName)
 })
 passport.deserializeUser((use,done)=>{
-  console.log(use)
+  console.log(use,'Desarilzing')
 done(null,use)
 })
 app.use(passport.session())
 app.use(body.json())
-
-app.post('/j',passport.authenticate('local'),(req,res,next)=>{
-  res.send({status:'true'})
-})
+app.use('/cart',addCart)
 app.use('/register',register)
 app.use('/fishData',getFish)
+app.post('/login',passport.authenticate('local'),(req,res,next)=>{
+  res.send({auth:true})
+})
 app.get('/img/:name',(req,res,next)=>{
     res.sendFile(`/home/king/Desktop/tuna/Images/${req.params.name}`)
 })
