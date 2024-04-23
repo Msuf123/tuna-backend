@@ -2,12 +2,12 @@ const nodemailer=require('nodemailer')
 const transpoter=nodemailer.createTransport({
     service:"gmail",
     auth:{
-        user:'xrobo17@gmail.com'
-        ,pass:'eszy uxye ioln gfeo '
+        user:''
+        ,pass:''
     }
 })
 var mailOptions = {
-    from: 'xrobo17@gmail.com',
+    from: '',
     
     subject: 'Sending Email using Node.js',
     text: 'No notken'
