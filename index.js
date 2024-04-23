@@ -13,9 +13,9 @@ const LocalStrategy = require('passport-local').Strategy
 const mysqlStore = require('express-mysql-session')(session);
 const  sessionStore = new mysqlStore({
   connectionLimit:10,
-  user:'admin',
-  password:'admin@123',
-  database:'fish',
+  user:'',
+  password:'',
+  database:'',
   host:'localhost',
   createDatabaseTable:true
 });
